@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Colour Run 5K</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --primary: #ff4f81;
+      --secondary: #3ec6ff;
+      --accent: #ffd166;
+      --dark: #222;
+      --light: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f7f7f7;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--light);
+      padding: 2.5rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.25) 0, transparent 50%),
+        radial-gradient(circle at 80% 0%, rgba(255,255,255,0.25) 0, transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,0.25) 0, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .header-inner {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .event-meta span {
+      background: rgba(255,255,255,0.15);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.7rem 1.4rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--light);
+      color: var(--dark);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--light);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: -2rem auto 3rem;
+      padding: 0 1.5rem 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1.2rem;
+      padding: 1.8rem 1.6rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(0,0,0,0.05);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .highlight-box {
+      border-radius: 1rem;
+      padding: 1rem 1.1rem;
+      background: linear-gradient(135deg, rgba(255,79,129,0.08), rgba(62,198,255,0.08));
+      border: 1px solid rgba(0,0,0,0.04);
+      font-size: 0.9rem;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 0.4rem;
+    }
+
+    ul li {
+      margin-bottom: 0.4rem;
+      display: flex;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    ul li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-top: 0.6rem;
+    }
+
+    .info-item {
+      border-radius: 0.9rem;
+      padding: 0.9rem 1rem;
+      background: #fafafa;
+      border: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #777;
+      margin-bottom: 0.2rem;
+    }
+
+    .info-value {
+      font-weight: 600;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+
+    .tier {
+      border-radius: 1rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid #eee;
+      background: #fafafa;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tier h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0.3rem 0 0.4rem;
+    }
+
+    .price span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #777;
+    }
+
+    .tier-tag {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.9rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--accent);
+      color: #333;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .faq-item {
+      margin-bottom: 0.8rem;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .faq-a {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+      padding: 1.5rem 1rem 2rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding-bottom: 3rem;
+      }
+      main {
+        margin-top: -1.5rem;
+      }
+      .card {
+        padding: 1.4rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / HERO -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">COLOUR RUN</div>
+      <h1>Colour Run 5K – Run, Laugh, Get Covered in Colour</h1>
+      <p class="tagline">
+        A fun, non‑competitive 5K where every kilometre hits you with a new burst of colour.
+      </p>
+
+      <div class="event-meta">
+        <span>📍 Your City Name Here</span>
+        <span>📅 21 September 2026</span>
+        <span>⏰ 10:00 AM Start</span>
+      </div>
+
+      <div class="cta-buttons">
+        <a href="#register" class="btn btn-primary">Register now</a>
+        <a href="#details" class="btn btn-ghost">Event details</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ABOUT SECTION -->
+    <section id="details" class="card">
+      <div class="pill">About the event</div>
+      <div class="two-col">
+        <div>
+          <h2>What is a Colour Run?</h2>
+          <p>
+            The Colour Run 5K is a relaxed, family‑friendly event where the focus is fun, not finish times.
+            At each kilometre marker, volunteers throw safe, plant‑based coloured powder so you cross the
+            finish line looking like a walking rainbow.
+          </p>
+          <ul>
+            <li>Perfect for beginners, families, and groups of friends</li>
+            <li>No official timing—run, jog, or walk at your own pace</li>
+            <li>Music, photo spots, and an epic colour throw at the finish</li>
+          </ul>
+        </div>
+        <div class="highlight-box">
+          <strong>Quick facts:</strong>
+          <ul>
+            <li>Distance: 5 km (you can walk it in about an hour)</li>
+            <li>Age: All ages welcome (under‑16s with an adult)</li>
+            <li>Colour powder: Non‑toxic, biodegradable, corn‑starch based</li>
+            <li>Dress code: White T‑shirt strongly recommended!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- INFO GRID -->
+    <section class="card">
+      <div class="pill">Key info</div>
+      <h2>When, where, and what to bring</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Date & time</div>
+          <div class="info-value">21 September 2026, 10:00 AM</div>
+          <p>Arrive 45 minutes early to collect your race pack.</p>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Location</div>
+          <div class="info-value">Central Park, Your City</div>
+          <p>Start/finish line near the main bandstand.</p>
+        </div>
+        <div class="info-item">
+          <div class="info-label">What to bring</div>
+          <div class="info-value">White top, comfy shoes</div>
+          <p>Optional: sunglasses, bandana, change of clothes, water bottle.</p>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Charity partner</div>
+          <div class="info-value">Your Charity Name</div>
+          <p>A portion of every ticket supports local projects.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING / REGISTRATION -->
+    <section id="register" class="card">
+      <div class="pill">Registration</div>
+      <h2>Sign up and join the colour</h2>
+      <p>
+        Choose the option that fits you best. Every registration includes a race bib, a packet of colour powder,
+        and access to the finish‑line colour party.
+      </p>
+
+      <div class="pricing">
+        <div class="tier">
+          <h3>Standard entry</h3>
+          <div class="price">£20 <span>per person</span></div>
+          <ul>
+            <li>Race bib + safety pins</li>
+            <li>1 colour powder packet</li>
+            <li>Finish‑line party access</li>
+          </ul>
+        </div>
+
+        <div class="tier">
+          <div class="tier-tag">Most popular</div>
+          <h3>Team of 4</h3>
+          <div class="price">£70 <span>per team</span></div>
+          <ul>
+            <li>4 race bibs</li>
+            <li>4 colour powder packets</li>
+            <li>Reserved team photo slot</li>
+          </ul>
+        </div>
+
+        <div class="tier">
+          <h3>Under‑12</h3>
+          <div class="price">£10 <span>with adult</span></div>
+          <ul>
+            <li>Child race bib</li>
+            <li>Mini colour packet</li>
+            <li>Kids’ warm‑up session</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem; font-size: 0.9rem;">
+        To register, add your own sign‑up link here:
+        <strong>example: <a href="#">www.yourcolourrun.com/register</a></strong>
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="card">
+      <div class="pill">FAQ</div>
+      <h2>Frequently asked questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">Is the colour powder safe?</div>
+        <div class="faq-a">
+          Yes. The powder is typically made from corn‑starch and food‑grade colour. If you have asthma or
+          respiratory issues, you may want to wear a mask or bandana.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What should I wear?</div>
+        <div class="faq-a">
+          A plain white T‑shirt shows the colours best. Wear clothes and shoes you don’t mind getting stained.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Will the colour stain my hair or skin?</div>
+        <div class="faq-a">
+          It usually washes off with soap and water, but lighter hair may hold colour for a day or two.
+          Oily hair products can help protect it.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I bring a camera or phone?</div>
+        <div class="faq-a">
+          Yes, but protect it with a plastic bag or case. The powder can get everywhere!
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="card">
+      <div class="pill">Contact</div>
+      <h2>Questions or group bookings?</h2>
+      <p>
+        Email us at <a href="mailto:info@yourcolourrun.com">info@yourcolourrun.com</a> or message us on Instagram
+        <strong>@yourcolourrun</strong>.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 Your Colour Run. Replace this text with your own organisation name and links.
+  </footer>
+
+</body>
+</html>
